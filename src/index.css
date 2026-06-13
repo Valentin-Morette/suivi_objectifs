@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply m-0 min-h-svh antialiased;
+    font-family: var(--font-sans);
+    background: #0c0f14;
+    color: #e8eaef;
+  }
+}
+
+@keyframes failed-row-glow {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 0 rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    box-shadow: inset 0 0 24px 0 rgba(239, 68, 68, 0.15);
+  }
+}
+
+.failed-row-glow {
+  animation: failed-row-glow 3s ease-in-out infinite;
+}
+
+/* Champ date — icône calendrier visible sur fond sombre (≈ zinc-600) */
+@layer components {
+  .input-date {
+    color-scheme: dark;
+  }
+
+  .input-date::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.7;
+    filter: invert(0.65) brightness(1.1);
+  }
+}

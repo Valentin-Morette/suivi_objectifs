@@ -1,0 +1,33 @@
+-- Schéma MySQL — page Sport (objectif hebdomadaire + séances)
+
+CREATE TABLE goals (
+  id                VARCHAR(64)  NOT NULL PRIMARY KEY,
+  label             VARCHAR(255) NOT NULL,
+  description       TEXT,
+  target_per_week   INT          NOT NULL CHECK (target_per_week > 0),
+  unit              VARCHAR(64)  NOT NULL DEFAULT 'séances',
+  created_at        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sessions (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  goal_id     VARCHAR(64)  NOT NULL,
+  `date`      DATE         NOT NULL,
+  activity    ENUM('badminton', 'muscu', 'course', 'velo') NOT NULL,
+  note        TEXT,
+  created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_sessions_goal
+    FOREIGN KEY (goal_id) REFERENCES goals (id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_sessions_goal_date ON sessions (goal_id, `date` DESC);
+
+-- Objectif initial (page Sport)
+INSERT INTO goals (id, label, description, target_per_week, unit)
+VALUES (
+  'sport',
+  'Sport',
+  '3 séances par semaine, peu importe l''activité',
+  3,
+  'séances'
+);
