@@ -9,6 +9,7 @@
     "dev:server": "tsx watch server/index.ts",
     "build": "tsc -b && vite build",
     "start": "NODE_ENV=production tsx server/index.ts",
+    "pm2:deploy": "npm run build && pm2 reload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs",
     "vps": "npm run build && npm run start",
     "lint": "eslint .",
     "preview": "vite preview"
