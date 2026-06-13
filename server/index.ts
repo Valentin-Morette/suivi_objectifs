@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express from 'express'
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { config } from './config.js'
@@ -9,7 +10,8 @@ import { goalsRouter } from './routes/goals.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distPath = path.resolve(__dirname, '../dist')
-const isProduction = process.env.NODE_ENV === 'production'
+const distIndex = path.join(distPath, 'index.html')
+const serveFrontend = fs.existsSync(distIndex)
 
 const app = express()
 
@@ -32,11 +34,13 @@ app.get('/api/health', async (_req, res) => {
 
 app.use('/api/goals', goalsRouter)
 
-if (isProduction) {
+if (serveFrontend) {
   app.use(express.static(distPath))
   app.get(/^(?!\/api).*/, (_req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'))
+    res.sendFile(distIndex)
   })
+} else {
+  console.warn('Dossier dist/ absent — lancez npm run build pour servir le site')
 }
 
 app.use(
@@ -70,9 +74,9 @@ async function start() {
   const listenHost = '0.0.0.0'
   app.listen(config.port, listenHost, () => {
     console.log(
-      isProduction
+      serveFrontend
         ? `App → http://<IP_DU_VPS>:${config.port}`
-        : `API → http://<IP_DU_VPS>:${config.port}`,
+        : `API seule → http://<IP_DU_VPS>:${config.port} (npm run build manquant)`,
     )
   })
 }
