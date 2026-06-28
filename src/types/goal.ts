@@ -1,4 +1,10 @@
-export type ActivityType = 'badminton' | 'muscu' | 'course' | 'velo'
+export type ActivityType =
+  | 'badminton'
+  | 'muscu'
+  | 'course'
+  | 'velo'
+  | 'renforcement'
+  | 'natation'
 
 export interface Session {
   id: number

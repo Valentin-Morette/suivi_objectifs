@@ -32,4 +32,18 @@ export const ACTIVITY_CONFIG: Record<
     border: 'border-cyan-500/40',
     text: 'text-cyan-300',
   },
+  renforcement: {
+    label: 'Renfo maison',
+    emoji: '🔥',
+    bg: 'bg-orange-500/15',
+    border: 'border-orange-500/40',
+    text: 'text-orange-300',
+  },
+  natation: {
+    label: 'Natation',
+    emoji: '🏊',
+    bg: 'bg-sky-500/15',
+    border: 'border-sky-500/40',
+    text: 'text-sky-300',
+  },
 }

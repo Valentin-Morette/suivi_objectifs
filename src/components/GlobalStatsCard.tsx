@@ -41,7 +41,7 @@ export function GlobalStatsCard({ sessions }: GlobalStatsCardProps) {
           </p>
         </div>
 
-        <div className="grid gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
           {activities.map((key) => {
             const cfg = ACTIVITY_CONFIG[key]
             const count = stats.byActivity[key]

@@ -25,7 +25,7 @@ export function getDbErrorMessage(err: unknown): string | null {
     sqlMessage.includes('Data truncated for column')
   ) {
     return (
-      'La base n’a pas les bonnes activités (badminton, muscu, course, velo). ' +
+      'La base n’a pas les bonnes activités (badminton, muscu, course, velo, renforcement, natation). ' +
       'Mettez à jour la colonne activity (voir script SQL dans la doc / le chat).'
     )
   }
