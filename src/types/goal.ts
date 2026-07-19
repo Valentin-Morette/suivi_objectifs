@@ -5,6 +5,7 @@ export type ActivityType =
   | 'velo'
   | 'renforcement'
   | 'natation'
+  | 'rando'
 
 export interface Session {
   id: number

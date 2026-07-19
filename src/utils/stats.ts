@@ -1,4 +1,4 @@
-import { ACTIVITY_CONFIG } from '../data/activityConfig'
+import { ACTIVITY_CONFIG, KM_ACTIVITIES } from '../data/activityConfig'
 import type { ActivityType, Session } from '../types/goal'
 import { parseDate } from './week'
 
@@ -16,13 +16,17 @@ export function formatKm(value: number): string {
   return `${rounded.toLocaleString('fr-FR', { maximumFractionDigits: 2 })} km`
 }
 
+export interface ActivityKmStats {
+  total: number
+  fromNotes: number
+}
+
 export interface GlobalStats {
   totalSessions: number
   statsSince: string | null
   statsSinceLabel: string | null
   byActivity: Record<ActivityType, number>
-  courseKmTotal: number
-  courseKmFromNotes: number
+  kmByActivity: Partial<Record<ActivityType, ActivityKmStats>>
 }
 
 export function buildGlobalStats(sessions: Session[]): GlobalStats {
@@ -30,16 +34,19 @@ export function buildGlobalStats(sessions: Session[]): GlobalStats {
     (Object.keys(ACTIVITY_CONFIG) as ActivityType[]).map((k) => [k, 0]),
   ) as Record<ActivityType, number>
 
-  let courseKmTotal = 0
-  let courseKmFromNotes = 0
+  const kmByActivity: Partial<Record<ActivityType, ActivityKmStats>> = {}
+  for (const key of KM_ACTIVITIES) {
+    kmByActivity[key] = { total: 0, fromNotes: 0 }
+  }
 
   for (const session of sessions) {
     byActivity[session.activity]++
-    if (session.activity === 'course') {
+    if (KM_ACTIVITIES.includes(session.activity)) {
       const km = parseKmFromNote(session.note)
       if (km !== null) {
-        courseKmTotal += km
-        courseKmFromNotes++
+        const bucket = kmByActivity[session.activity]!
+        bucket.total += km
+        bucket.fromNotes++
       }
     }
   }
@@ -59,7 +66,6 @@ export function buildGlobalStats(sessions: Session[]): GlobalStats {
     statsSince,
     statsSinceLabel,
     byActivity,
-    courseKmTotal,
-    courseKmFromNotes,
+    kmByActivity,
   }
 }

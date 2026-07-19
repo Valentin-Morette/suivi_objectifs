@@ -1,4 +1,4 @@
-import { ACTIVITY_CONFIG } from '../data/activityConfig'
+import { ACTIVITY_CONFIG, KM_ACTIVITIES } from '../data/activityConfig'
 import type { ActivityType, Session } from '../types/goal'
 import { buildGlobalStats, formatKm } from '../utils/stats'
 
@@ -41,17 +41,15 @@ export function GlobalStatsCard({ sessions }: GlobalStatsCardProps) {
           </p>
         </div>
 
-        <div className="grid gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
           {activities.map((key) => {
             const cfg = ACTIVITY_CONFIG[key]
             const count = stats.byActivity[key]
-            const isCourse = key === 'course'
+            const tracksKm = KM_ACTIVITIES.includes(key)
+            const kmStats = stats.kmByActivity[key]
 
             return (
-              <div
-                key={key}
-                className={`bg-[#0c0f14] px-5 py-4 ${isCourse ? 'sm:col-span-2 lg:col-span-1' : ''}`}
-              >
+              <div key={key} className="bg-[#0c0f14] px-5 py-4">
                 <div className="flex items-center gap-2">
                   <span aria-hidden>{cfg.emoji}</span>
                   <span className={`text-sm font-medium ${cfg.text}`}>{cfg.label}</span>
@@ -62,12 +60,12 @@ export function GlobalStatsCard({ sessions }: GlobalStatsCardProps) {
                     séance{count > 1 ? 's' : ''}
                   </span>
                 </p>
-                {isCourse && stats.courseKmFromNotes > 0 && (
-                  <p className="mt-2 text-sm text-amber-300/90">
-                    {formatKm(stats.courseKmTotal)} cumulés
+                {tracksKm && kmStats && kmStats.fromNotes > 0 && (
+                  <p className={`mt-2 text-sm ${cfg.text}`}>
+                    {formatKm(kmStats.total)} cumulés
                   </p>
                 )}
-                {isCourse && count > 0 && stats.courseKmFromNotes === 0 && (
+                {tracksKm && count > 0 && kmStats && kmStats.fromNotes === 0 && (
                   <p className="mt-2 text-xs text-zinc-600">
                     Ajoute « 5,5km » dans la note pour cumuler les km
                   </p>

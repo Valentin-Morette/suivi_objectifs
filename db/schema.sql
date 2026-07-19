@@ -13,7 +13,7 @@ CREATE TABLE sessions (
   id          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   goal_id     VARCHAR(64)  NOT NULL,
   `date`      DATE         NOT NULL,
-  activity    ENUM('badminton', 'muscu', 'course', 'velo', 'renforcement', 'natation') NOT NULL,
+  activity    ENUM('badminton', 'muscu', 'course', 'velo', 'renforcement', 'natation', 'rando') NOT NULL,
   note        TEXT,
   created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_sessions_goal

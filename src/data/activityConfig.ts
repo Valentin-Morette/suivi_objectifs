@@ -46,4 +46,14 @@ export const ACTIVITY_CONFIG: Record<
     border: 'border-sky-500/40',
     text: 'text-sky-300',
   },
+  rando: {
+    label: 'Randonnée',
+    emoji: '🥾',
+    bg: 'bg-lime-500/15',
+    border: 'border-lime-500/40',
+    text: 'text-lime-300',
+  },
 }
+
+/** Activités dont les km sont lus dans la note */
+export const KM_ACTIVITIES: ActivityType[] = ['course', 'velo', 'rando']

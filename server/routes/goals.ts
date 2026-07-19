@@ -7,7 +7,15 @@ import {
 } from '../db/goalsRepository.js'
 import { toGoalDto } from '../mappers/goalMapper.js'
 
-const ACTIVITIES = ['badminton', 'muscu', 'course', 'velo', 'renforcement', 'natation'] as const
+const ACTIVITIES = [
+  'badminton',
+  'muscu',
+  'course',
+  'velo',
+  'renforcement',
+  'natation',
+  'rando',
+] as const
 
 export const goalsRouter = Router()
 
