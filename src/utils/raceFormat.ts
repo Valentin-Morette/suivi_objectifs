@@ -18,3 +18,21 @@ export function formatDistanceKm(km: number): string {
 export function formatElevation(meters: number): string {
   return `+${meters.toLocaleString('fr-FR')} m`
 }
+
+/** Parse "58/100" → 58 (percentile). Retourne null si format invalide. */
+export function parseTopPercent(position?: string): number | null {
+  if (!position) return null
+  const match = position.trim().match(/^(\d+)\s*\/\s*(\d+)$/)
+  if (!match) return null
+  const rank = Number.parseInt(match[1], 10)
+  const total = Number.parseInt(match[2], 10)
+  if (total < 1 || rank < 1) return null
+  return Math.min(100, Math.round((rank / total) * 100))
+}
+
+export function topPercentColorClass(percent: number): string {
+  if (percent <= 25) return 'text-sky-400'
+  if (percent <= 50) return 'text-emerald-400'
+  if (percent <= 75) return 'text-orange-400'
+  return 'text-red-400'
+}

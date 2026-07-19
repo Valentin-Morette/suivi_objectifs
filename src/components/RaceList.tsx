@@ -4,6 +4,8 @@ import {
   formatDistanceKm,
   formatDuration,
   formatElevation,
+  parseTopPercent,
+  topPercentColorClass,
 } from '../utils/raceFormat'
 
 const TYPE_CONFIG: Record<
@@ -44,6 +46,7 @@ export function RaceList({ races }: RaceListProps) {
           month: 'long',
           year: 'numeric',
         })
+        const topPercent = parseTopPercent(race.position)
 
         return (
           <li
@@ -81,7 +84,7 @@ export function RaceList({ races }: RaceListProps) {
               )}
             </div>
 
-            <dl className="mt-4 grid grid-cols-3 gap-3">
+            <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div>
                 <dt className="text-xs text-zinc-500">Distance</dt>
                 <dd className="mt-0.5 text-sm font-medium tabular-nums text-zinc-200">
@@ -98,6 +101,18 @@ export function RaceList({ races }: RaceListProps) {
                 <dt className="text-xs text-zinc-500">Dénivelé</dt>
                 <dd className="mt-0.5 text-sm font-medium tabular-nums text-zinc-200">
                   {race.elevationM != null ? formatElevation(race.elevationM) : '—'}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-zinc-500">Position relative</dt>
+                <dd
+                  className={`mt-0.5 text-sm font-semibold tabular-nums ${
+                    topPercent != null
+                      ? topPercentColorClass(topPercent)
+                      : 'text-zinc-200'
+                  }`}
+                >
+                  {topPercent != null ? `${topPercent}%` : '—'}
                 </dd>
               </div>
             </dl>
