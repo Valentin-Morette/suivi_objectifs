@@ -5,6 +5,9 @@ import { useRaces } from '../hooks/useRaces'
 export function RacesPage() {
   const { races, loading, error, reload } = useRaces()
 
+  const courseCount = races.filter((r) => r.type === 'course').length
+  const trailCount = races.filter((r) => r.type === 'trail').length
+
   return (
     <>
       <header className="mb-8 flex flex-wrap items-end justify-between gap-4 text-left">
@@ -17,12 +20,6 @@ export function RacesPage() {
           </h1>
           <p className="mt-2 text-sm text-zinc-400">
             Historique des courses et trails réalisés
-            {!loading && races.length > 0 && (
-              <>
-                {' '}
-                · {races.length} course{races.length > 1 ? 's' : ''}
-              </>
-            )}
           </p>
         </div>
         <Link
@@ -49,6 +46,29 @@ export function RacesPage() {
           >
             Réessayer
           </button>
+        </div>
+      )}
+
+      {!loading && !error && races.length > 0 && (
+        <div className="mb-6 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/8 bg-white/5">
+          <div className="bg-[#0c0f14] px-4 py-3 text-left">
+            <p className="text-xs text-zinc-500">Total</p>
+            <p className="mt-1 text-2xl font-semibold tabular-nums text-white">
+              {races.length}
+            </p>
+          </div>
+          <div className="bg-[#0c0f14] px-4 py-3 text-left">
+            <p className="text-xs text-amber-300/80">🏃 Courses</p>
+            <p className="mt-1 text-2xl font-semibold tabular-nums text-amber-300">
+              {courseCount}
+            </p>
+          </div>
+          <div className="bg-[#0c0f14] px-4 py-3 text-left">
+            <p className="text-xs text-lime-300/80">⛰️ Trails</p>
+            <p className="mt-1 text-2xl font-semibold tabular-nums text-lime-300">
+              {trailCount}
+            </p>
+          </div>
         </div>
       )}
 
