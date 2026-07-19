@@ -22,6 +22,21 @@ CREATE TABLE sessions (
 
 CREATE INDEX idx_sessions_goal_date ON sessions (goal_id, `date` DESC);
 
+-- Courses / trails réalisés (compétitions)
+CREATE TABLE races (
+  id                INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  type              ENUM('course', 'trail') NOT NULL,
+  name              VARCHAR(255) NOT NULL,
+  `date`            DATE NOT NULL,
+  duration_seconds  INT UNSIGNED NOT NULL,
+  distance_km       DECIMAL(6, 2) NOT NULL,
+  elevation_m       INT UNSIGNED NULL,
+  position          VARCHAR(32) NULL,
+  created_at        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_races_date ON races (`date` DESC);
+
 -- Objectif initial (page Sport)
 INSERT INTO goals (id, label, description, target_per_week, unit)
 VALUES (

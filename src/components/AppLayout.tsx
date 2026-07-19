@@ -16,18 +16,13 @@ export function AppLayout() {
       </div>
 
       <div className="relative mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-8">
-        <nav className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/8 pb-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
-            Suivi objectifs
-          </p>
-          <div className="flex gap-2">
-            <NavLink to="/" end className={linkClass}>
-              Tableau de bord
-            </NavLink>
-            <NavLink to="/ajouter" className={linkClass}>
-              Ajouter une séance
-            </NavLink>
-          </div>
+        <nav className="mb-8 flex flex-wrap items-center gap-2 border-b border-white/8 pb-4">
+          <NavLink to="/" end className={linkClass}>
+            Séances
+          </NavLink>
+          <NavLink to="/courses" className={linkClass}>
+            Courses
+          </NavLink>
         </nav>
 
         <Outlet />

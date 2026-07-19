@@ -7,6 +7,7 @@ import { config } from './config.js'
 import { getDbErrorMessage } from './db/dbErrors.js'
 import { pingDatabase } from './db/pool.js'
 import { goalsRouter } from './routes/goals.js'
+import { racesRouter } from './routes/races.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distPath = path.resolve(__dirname, '../dist')
@@ -33,6 +34,7 @@ app.get('/api/health', async (_req, res) => {
 })
 
 app.use('/api/goals', goalsRouter)
+app.use('/api/races', racesRouter)
 
 if (serveFrontend) {
   app.use(express.static(distPath))

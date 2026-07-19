@@ -1,15 +1,9 @@
 import { Link } from 'react-router-dom'
-import { CurrentWeekCard } from '../components/CurrentWeekCard'
-import { GlobalStatsCard } from '../components/GlobalStatsCard'
-import { WeekHistoryTable } from '../components/WeekHistoryTable'
-import { useSportGoal } from '../hooks/useSportGoal'
-import { buildWeekSummariesForGoal } from '../utils/week'
+import { RaceList } from '../components/RaceList'
+import { useRaces } from '../hooks/useRaces'
 
-export function DashboardPage() {
-  const { goal, loading, error, reload } = useSportGoal()
-
-  const weeks = goal ? buildWeekSummariesForGoal(goal) : []
-  const currentWeek = weeks.find((w) => w.isCurrent)
+export function RacesPage() {
+  const { races, loading, error, reload } = useRaces()
 
   return (
     <>
@@ -19,15 +13,23 @@ export function DashboardPage() {
             className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            Séances
+            Mes courses
           </h1>
-          <p className="mt-2 text-sm text-zinc-400">Objectif : 3 séances par semaine</p>
+          <p className="mt-2 text-sm text-zinc-400">
+            Historique des courses et trails réalisés
+            {!loading && races.length > 0 && (
+              <>
+                {' '}
+                · {races.length} course{races.length > 1 ? 's' : ''}
+              </>
+            )}
+          </p>
         </div>
         <Link
-          to="/ajouter"
+          to="/courses/ajouter"
           className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-indigo-950/50 transition hover:bg-indigo-500"
         >
-          + Ajouter une séance
+          + Ajouter une course
         </Link>
       </header>
 
@@ -50,21 +52,7 @@ export function DashboardPage() {
         </div>
       )}
 
-      {!loading && !error && goal && (
-        <>
-          {currentWeek ? (
-            <CurrentWeekCard goal={goal} week={currentWeek} />
-          ) : (
-            <p className="rounded-xl border border-white/10 bg-white/5 p-6 text-zinc-400">
-              Aucune donnée pour la semaine en cours.
-            </p>
-          )}
-
-          <GlobalStatsCard sessions={goal.sessions} />
-
-          <WeekHistoryTable weeks={weeks} />
-        </>
-      )}
+      {!loading && !error && <RaceList races={races} />}
     </>
   )
 }
