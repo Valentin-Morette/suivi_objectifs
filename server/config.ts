@@ -18,4 +18,12 @@ export const config = {
     database: required('DB_NAME'),
     connectTimeoutMs: Number(process.env.DB_CONNECT_TIMEOUT_MS ?? 5000),
   },
+  social: {
+    youtubeApiKey: (process.env.YOUTUBE_API_KEY ?? '').trim(),
+    youtubeHandle: (process.env.YOUTUBE_HANDLE ?? 'birious_3D').trim().replace(/^@/, ''),
+    tiktokHandle: (process.env.TIKTOK_HANDLE ?? 'birious_3D').trim().replace(/^@/, ''),
+  },
+  chess: {
+    username: (process.env.CHESS_USERNAME ?? 'birious').trim().replace(/^@/, ''),
+  },
 }

@@ -12,6 +12,7 @@
     "pm2:reload": "pm2 reload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs",
     "pm2:deploy": "npm run build && npm run pm2:reload",
     "deploy:vps": "bash scripts/deploy-vps.sh",
+    "stats:snapshot": "tsx scripts/snapshot-social-stats.ts",
     "vps": "npm run build && npm run start",
     "lint": "eslint .",
     "preview": "vite preview"

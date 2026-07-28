@@ -37,6 +37,19 @@ CREATE TABLE races (
 
 CREATE INDEX idx_races_date ON races (`date` DESC);
 
+-- Historique quotidien abonnés YouTube / TikTok (1 ligne / jour / plateforme)
+CREATE TABLE social_stats (
+  id            INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  platform      ENUM('youtube', 'tiktok') NOT NULL,
+  handle        VARCHAR(64) NOT NULL,
+  followers     INT UNSIGNED NOT NULL,
+  recorded_on   DATE NOT NULL,
+  created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_social_platform_day (platform, recorded_on)
+);
+
+CREATE INDEX idx_social_stats_day ON social_stats (recorded_on DESC);
+
 -- Objectif initial (page Sport)
 INSERT INTO goals (id, label, description, target_per_week, unit)
 VALUES (

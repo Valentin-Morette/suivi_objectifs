@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 .env
+client_secret*.json
+*credentials*.json
+*-googleusercontent.com.json
+logs/
 
 # Editor directories and files
 .vscode/*
